@@ -1,0 +1,3 @@
+type	category	name	description	author	url	tags	icon
+applet	Editor	Web Editor	Default Web Editor.	moonstone	https://github.com/moonstone-app/applet-web-editor	editor	✏️
+service	Telegram	Telegram Notes	Telegram bot that saves messages, photos and voice notes to your wiki pages.	moonstone	https://github.com/moonstone-app/service-telegram-notes	telegram,bot,mobile	🤖

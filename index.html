@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moonstone — Vault-Agnostic Headless PKM Server</title>
+  <meta name="description" content="One REST API for Obsidian, Logseq, and Zim. Headless server with 60+ endpoints, zero-build applets, and background services. Self-hosted, open source, free forever.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo"><span class="moon-mark"></span><span>Moonstone</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#api">API</a></li>
+        <li><a href="#applets">Applets</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#workspace">Workspace</a></li>
+        <li><a href="#ai">AI Dev</a></li>
+        <li><a href="market.html" style="color:var(--moon-gold);">Market</a></li>
+      </ul>
+      <a href="https://github.com/moonstone-app/moonstone" class="nav-cta btn btn-nav">Install</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO (API + APPLETS + SERVICES) -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="glow glow--1"></div>
+      <div class="glow glow--2"></div>
+      <div class="glow glow--3"></div>
+    </div>
+    <div class="container hero-inner" style="flex-direction: row; text-align: left;">
+      <div class="hero-content" style="max-width: 600px;">
+        <p class="hero-eyebrow">The Headless PKM Server</p>
+        <h1>Your notes folder,<br><span class="shimmer-text">now a powerful API.</span></h1>
+        <p class="hero-sub">
+          Supercharge Obsidian, Logseq, Zim or even just a folder with .md notes. Build zero-build web applets, run background automations, and sync anything to your notes — instantly and locally.
+        </p>
+        <div class="hero-actions">
+          <a href="#start" class="btn btn-primary">
+            Quick Start
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="market.html" class="btn btn-ghost">Browse App Market</a>
+        </div>
+      </div>
+      <div class="hero-stone-wrap">
+        <div class="moonstone" id="moonstone">
+          <div class="stone-ring stone-ring--1"></div>
+          <div class="stone-ring stone-ring--2"></div>
+          <div class="stone-ring stone-ring--3"></div>
+          <div class="stone-core"></div>
+          <div class="stone-sheen"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. ОБ API -->
+  <section class="format-switcher-sec" id="api">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">1. Core API Backend</p>
+        <h2 class="section-title">One universal API. <span class="shimmer-text">Any format.</span></h2>
+        <p class="section-sub">Obsidian, Logseq, and Zim have different syntaxes. Moonstone detects the vault format and normalizes them on the fly. The same API request works for all of them.</p>
+      </div>
+      
+      <div class="api-switcher reveal">
+        <div class="api-switcher-tabs">
+          <button class="switcher-tab active" data-format="moonstone">Moonstone</button>
+          <button class="switcher-tab" data-format="obsidian">Obsidian</button>
+          <button class="switcher-tab" data-format="logseq">Logseq</button>
+          <button class="switcher-tab" data-format="zim">Zim</button>
+        </div>
+        
+        <div class="api-switcher-content">
+          <div class="api-switcher-file">
+            <div class="api-hdr">File on Disk</div>
+            <pre class="api-code" id="code-disk"><code>---
+tags: [pkm, api]
+aliases: [moon]
+---
+# Welcome
+Check [[Setup Guide]] or #help.</code></pre>
+          </div>
+          <div class="api-switcher-arrow">
+            <div class="arrow-path">
+               <div class="arrow-dot"></div>
+            </div>
+            <span>GET /api/page/Welcome</span>
+          </div>
+          <div class="api-switcher-json">
+            <div class="api-hdr">Moonstone API Output</div>
+            <pre class="api-code"><code>{
+  "title": "Welcome",
+  "tags": ["pkm", "api", "help"],
+  "links": ["Setup Guide"],
+  "content": "Check [[Setup Guide]] or #help."
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. ОБ АППЛЕТАХ -->
+  <section class="zero-build-sec" id="applets">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center; max-width:800px; margin: 0 auto 60px;">
+        <p class="section-label">2. Zero-Build Applets</p>
+        <h2 class="section-title">Make it yours. <span class="shimmer-text">Instantly.</span></h2>
+        <p class="section-sub">Forget about Electron, TypeScript, and complex build pipelines. A Moonstone Applet is just a folder with an HTML file. Drop it in, and it's instantly available in your workspace.</p>
+      </div>
+      
+      <div class="zero-grid reveal">
+        <div class="zero-text">
+          <h3>The simplest way to build tools</h3>
+          <p>Want a custom Pomodoro timer? A Kanban board? A Flashcard app? Just write standard HTML and JavaScript. Use the built-in <code>fetch('/api/pages')</code> to read and write notes directly. Moonstone handles the routing, security, and live SSE updates.</p>
+          <ul class="demo-bullets" style="margin-top:20px;">
+            <li><span class="icon">📁</span> Just a folder</li>
+            <li><span class="icon">🚫</span> No Node.js / NPM</li>
+            <li><span class="icon">🌐</span> Pure HTML/JS/CSS</li>
+          </ul>
+        </div>
+        <div class="zero-anim">
+          <div class="zero-folder">
+            <div class="folder-icon">📁 my-app/</div>
+            <div class="folder-file">📄 manifest.json</div>
+            <div class="folder-file">📄 index.html</div>
+          </div>
+          <div class="zero-arrow">→</div>
+          <div class="zero-browser">
+            <div class="browser-hdr">localhost:8090/apps/my-app</div>
+            <div class="browser-ui">
+               <div class="kanban-mock">
+                 <div class="k-col"><div class="k-c"></div><div class="k-c"></div></div>
+                 <div class="k-col"><div class="k-c k-hl"></div></div>
+                 <div class="k-col"><div class="k-c k-dim"></div></div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. О СЕРВИСАХ -->
+  <section class="demo-split" id="services" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="demo-split-grid reveal" style="direction: rtl;">
+        <!-- Текст справа (direction rtl / ltr hack) -->
+        <div class="demo-split-text" style="direction: ltr;">
+          <p class="section-label">3. Background Services</p>
+          <h2>Automate your notes <br><span class="shimmer-text">while you sleep.</span></h2>
+          <p>
+            Applets run in the browser, but <strong>Services</strong> run as Python daemons on your server. They monitor your vault 24/7, pulling data from APIs, syncing tasks, and generating summaries.
+          </p>
+          <ul class="demo-bullets">
+            <li><span class="icon">🤖</span> Fully isolated venvs</li>
+            <li><span class="icon">🔄</span> Auto-restart on crash</li>
+            <li><span class="icon">📦</span> Built-in Moonstone SDK</li>
+          </ul>
+        </div>
+        
+        <div class="demo-split-visual" style="direction: ltr;">
+          <!-- Сервисный терминал -->
+          <div class="demo-window demo-term" style="width: 100%; height: 100%; top:0; left:0; position:relative; background:#0b0c10;">
+            <div class="demo-window-hdr"><div class="demo-dots"><span></span><span></span><span></span></div><span>moonstone service logs github-sync</span></div>
+            <div class="demo-window-body" style="font-size: 0.75rem;">
+              <div class="code-line"><span style="color:#5c6370">[2026-03-10 05:01:10]</span> <span style="color:#61afef">INFO</span> Daemon started. Venv active.</div>
+              <div class="code-line"><span style="color:#5c6370">[2026-03-10 05:01:12]</span> <span style="color:#98c379">SUCCESS</span> Connected to Moonstone API (ws://localhost:8090/events)</div>
+              <div class="code-line"><span style="color:#5c6370">[2026-03-10 05:05:00]</span> <span style="color:#61afef">INFO</span> Cron triggered: Fetching GitHub PRs...</div>
+              <div class="code-line type-anim" style="animation-duration: 3s;"><span style="color:#e5c07b">UPDATE</span> Modifying page "Dashboard/Work"...<span class="cursor">█</span></div>
+              <div class="code-line cmd-status" style="animation: appear 3s infinite;">→ Inserted 3 new pull requests via PATCH API.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- КАРТОЧКИ ОВЕРВЬЮ -->
+  <section class="overview-sec" style="padding: 80px 0; background: var(--bg-card);">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center; max-width:800px; margin: 0 auto 60px;">
+        <h2 class="section-title">Bundled <span class="shimmer-text">out of the box</span></h2>
+        <p class="section-sub">Moonstone comes with powerful, pre-written tools that are ready to use the moment you start the server.</p>
+      </div>
+
+      <div class="overview-grid reveal">
+        <!-- Карточка 1 -->
+        <div class="overview-card">
+          <div class="overview-visual">
+            <div class="mock-browser-mini">
+               <div class="mock-hdr"></div>
+               <div class="mock-body" style="padding:10px;">
+                 <div style="width:50%;height:10px;background:var(--moon-ice);margin-bottom:10px;border-radius:2px;"></div>
+                 <div style="width:80%;height:4px;background:#ddd;margin-bottom:6px;"></div>
+                 <div style="width:70%;height:4px;background:#ddd;margin-bottom:12px;"></div>
+                 <div style="display:flex; gap:4px;">
+                    <div style="width:16px;height:16px;background:var(--moon-gold);border-radius:50%;"></div>
+                    <div style="width:16px;height:16px;background:var(--moon-ice);border-radius:50%;"></div>
+                 </div>
+               </div>
+            </div>
+          </div>
+          <div class="overview-info">
+            <span class="badge" style="background:rgba(136,200,192,0.1); color:var(--moon-ice);">Applet</span>
+            <h3>Web Editor PWA</h3>
+            <p>Access and edit your notes from your phone. Full file tree, markdown editor, live collaborative cursors via WebSocket, and tag search. No subscription required.</p>
+          </div>
+        </div>
+
+        <!-- Карточка 2 -->
+        <div class="overview-card">
+          <div class="overview-visual" style="background:#1a1c23;">
+            <div class="mock-tg-mini">
+              <div class="tg-msg tg-out">Send this photo to Inbox</div>
+              <div class="tg-msg tg-in">✅ Saved to Inbox as attachment.</div>
+            </div>
+          </div>
+          <div class="overview-info">
+            <span class="badge" style="background:rgba(230,190,138,0.1); color:var(--moon-gold);">Service</span>
+            <h3>Telegram Bridge</h3>
+            <p>Forward text, voice messages, and photos to your Telegram bot. The daemon automatically parses them, downloads media, and creates perfectly formatted entries in your vault.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- О WORKSPACE (Тайлы) -->
+  <section class="workspace-sec" id="workspace" style="padding: 80px 0;">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center; max-width:800px; margin: 0 auto 60px;">
+        <p class="section-label">The Workspace</p>
+        <h2 class="section-title">Your brain, <span class="shimmer-text">tiled.</span></h2>
+        <p class="section-sub">Load multiple Applets side-by-side. The workspace uses a tiling window manager for the web. Save layouts, drag splitters, and build dashboards.</p>
+      </div>
+
+      <div class="workspace-visual reveal" style="max-width: 900px; margin: 0 auto; border: 1px solid var(--border-lit); border-radius: 8px; background: #fff; overflow:hidden;">
+        <!-- Toolbar -->
+        <div style="background: #f4f5f7; padding: 8px 16px; display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; font-family: var(--mono); font-size: 0.75rem; color: #555;">
+          <div>[ Layout: Project Dashboard ]</div>
+          <div>⊞ Split | ✕ Close</div>
+        </div>
+        <!-- Grid -->
+        <div style="display:flex; height: 300px;">
+          <!-- Left Col -->
+          <div style="flex: 1; border-right: 2px solid #ddd; display: flex; flex-direction: column;">
+            <div style="flex: 1; border-bottom: 2px solid #ddd; padding: 12px;">
+              <strong style="font-family:var(--sans); font-size:0.8rem; color:#111;">🕸️ Graph Applet</strong>
+              <div style="margin-top:12px; display:flex; justify-content:center; align-items:center; height:60%;">
+                <div style="width:40px;height:40px;border-radius:50%;border:2px solid var(--moon-ice);"></div>
+              </div>
+            </div>
+            <div style="flex: 1; padding: 12px;">
+              <strong style="font-family:var(--sans); font-size:0.8rem; color:#111;">📋 Tasks Applet</strong>
+              <ul style="margin-top:8px; padding-left:16px; font-size:0.75rem; color:#333;"><li>Review code</li><li style="text-decoration:line-through; color:#999;">Write docs</li></ul>
+            </div>
+          </div>
+          <!-- Right Col -->
+          <div style="flex: 2; padding: 12px; background: #fafafa;">
+             <strong style="font-family:var(--sans); font-size:0.8rem; color:#111;">✏️ Editor Applet</strong>
+             <div style="margin-top:12px; width:90%; height:8px; background:#ddd; border-radius:4px;"></div>
+             <div style="margin-top:8px; width:60%; height:8px; background:#ddd; border-radius:4px;"></div>
+             <div style="margin-top:8px; width:75%; height:8px; background:#ddd; border-radius:4px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- AI GEN (dev-bundle) -->
+  <section class="vibe" id="ai" style="padding: 100px 0; border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center; max-width:800px; margin: 0 auto;">
+        <p class="section-label">Vibe Coding</p>
+        <h2 class="section-title">Describe the app. <span class="shimmer-text">AI builds it.</span></h2>
+        <p class="section-sub">Moonstone ships with a <code>dev-bundle</code> containing a full OpenAPI spec. Paste it into ChatGPT or Claude, and let AI write the Applet for you in seconds.</p>
+      </div>
+
+      <div class="ai-visual-wrap reveal" style="margin-top: 60px; display: flex; flex-direction: column; align-items: center; gap: 24px;">
+        <!-- Chat Prompt -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-lit); border-radius: 12px; padding: 24px; max-width: 600px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <div class="vibe-avatar" style="width: 40px; height: 40px; font-size: 1rem;">🧑</div>
+            <div>
+              <p style="font-size: 0.95rem; color: var(--text); line-height: 1.6;">
+                "Read the Moonstone OpenAPI spec. I need a <strong>Todo Manager</strong> applet. Fetch all pages containing checkboxes. Group them by page title. When I click a checkbox in the UI, use the PATCH endpoint to update the original markdown file."
+              </p>
+              <div style="margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; background: rgba(136,200,192,0.1); color: var(--moon-ice); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-family: var(--mono);">
+                📎 dev-bundle.txt attached
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Arrow -->
+        <div style="color: var(--moon-gold); font-size: 1.5rem; animation: slide-down 1.5s infinite;">↓</div>
+        
+        <!-- Generated Applet Mockup -->
+        <div style="background: #fff; border-radius: 8px; border: 1px solid #ddd; max-width: 600px; width: 100%; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15);">
+          <div style="background: #f0f0f0; padding: 10px 16px; border-bottom: 1px solid #ddd; font-family: var(--sans); font-weight: 600; color: #333; display: flex; justify-content: space-between;">
+            <span>✅ AI Todo Manager</span>
+            <span style="font-size: 0.8rem; color: #888; font-weight: normal;">index.html</span>
+          </div>
+          <div style="padding: 20px; color: #111;">
+            <div style="margin-bottom: 16px;">
+              <div style="font-size: 0.8rem; color: #666; font-weight: bold; text-transform: uppercase; margin-bottom: 8px;">Dashboard.md</div>
+              <label style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f9f9f9; border-radius: 4px; margin-bottom: 4px; cursor: pointer;">
+                <input type="checkbox" checked style="accent-color: var(--moon-ice);"> <span style="text-decoration: line-through; color: #888;">Review PR #42</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f9f9f9; border-radius: 4px; cursor: pointer;">
+                <input type="checkbox"> <span>Write API docs</span>
+              </label>
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; color: #666; font-weight: bold; text-transform: uppercase; margin-bottom: 8px;">Inbox.md</div>
+              <label style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f9f9f9; border-radius: 4px; cursor: pointer;">
+                <input type="checkbox"> <span>Call mom</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="compare" id="compare">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Honest comparison</p>
+        <h2 class="section-title">Same notes. <span class="shimmer-text">Unfair advantage.</span></h2>
+      </div>
+      <div class="compare-table compare-table-5col reveal">
+        <div class="compare-row compare-header">
+          <div class="compare-cell compare-feature"></div>
+          <div class="compare-cell">Notion</div>
+          <div class="compare-cell">Obsidian</div>
+          <div class="compare-cell">Logseq</div>
+          <div class="compare-cell">Zim Wiki</div>
+          <div class="compare-cell compare-hl">Moonstone</div>
+        </div>
+        <div class="compare-row"><div class="compare-cell compare-feature">Open source</div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="ok">✓</span></div><div class="compare-cell"><span class="ok">✓</span></div><div class="compare-cell compare-hl"><span class="ok">✓ GPL v3</span></div></div>
+        <div class="compare-row"><div class="compare-cell compare-feature">100% local data</div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="ok">✓</span></div><div class="compare-cell"><span class="ok">✓</span></div><div class="compare-cell"><span class="ok">✓</span></div><div class="compare-cell compare-hl"><span class="ok">✓</span></div></div>
+        <div class="compare-row"><div class="compare-cell compare-feature">Vault-agnostic</div><div class="compare-cell"><span class="x">N/A</span></div><div class="compare-cell"><span class="x">.md only</span></div><div class="compare-cell"><span class="x">.md only</span></div><div class="compare-cell"><span class="x">.txt only</span></div><div class="compare-cell compare-hl"><span class="ok">all 3 formats</span></div></div>
+        <div class="compare-row"><div class="compare-cell compare-feature">REST API</div><div class="compare-cell"><span class="mid">limited</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">D-Bus</span></div><div class="compare-cell compare-hl"><span class="ok">60+</span></div></div>
+        <div class="compare-row"><div class="compare-cell compare-feature">Real-time (WS+SSE)</div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell compare-hl"><span class="ok">✓</span></div></div>
+        <div class="compare-row"><div class="compare-cell compare-feature">Headless mode</div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell compare-hl"><span class="ok">✓</span></div></div>
+        <div class="compare-row"><div class="compare-cell compare-feature">Custom web apps</div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="mid">Electron</span></div><div class="compare-cell"><span class="mid">ClojureS</span></div><div class="compare-cell"><span class="mid">Python</span></div><div class="compare-cell compare-hl"><span class="ok">HTML + JS</span></div></div>
+        <div class="compare-row"><div class="compare-cell compare-feature">Background services</div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell"><span class="x">✕</span></div><div class="compare-cell compare-hl"><span class="ok">managed</span></div></div>
+        <div class="compare-row"><div class="compare-cell compare-feature">Vendor lock-in</div><div class="compare-cell"><span class="x">high</span></div><div class="compare-cell"><span class="mid">medium</span></div><div class="compare-cell"><span class="mid">medium</span></div><div class="compare-cell"><span class="ok">low</span></div><div class="compare-cell compare-hl"><span class="ok">zero</span></div></div>
+        <div class="compare-row"><div class="compare-cell compare-feature">Price</div><div class="compare-cell"><span class="x">$10/mo</span></div><div class="compare-cell"><span class="mid">$0–16/mo</span></div><div class="compare-cell"><span class="ok">$0</span></div><div class="compare-cell"><span class="ok">$0</span></div><div class="compare-cell compare-hl"><span class="ok">$0 forever</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECURITY (VISUALIZED) -->
+  <section class="security-sec" style="padding: 80px 0; background: var(--bg-card); border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;">
+        <p class="section-label">Trust & Safety</p>
+        <h2 class="section-title">Secure <span class="shimmer-text">by default.</span></h2>
+        <p class="section-sub">Your knowledge is your most private asset. Moonstone gives you full control over where it goes.</p>
+      </div>
+
+      <div class="security-visual reveal" style="max-width: 800px; margin: 40px auto 0; display: flex; align-items: center; justify-content: center; gap: 40px;">
+        <div class="sec-box" style="text-align: right; width: 200px;">
+          <h4 style="color: var(--moon-ice); margin-bottom: 8px;">100% Localhost</h4>
+          <p style="font-size: 0.8rem; color: var(--text-dim);">No telemetry. No clouds. Data never leaves your machine unless you choose to expose it.</p>
+        </div>
+        
+        <div class="sec-shield" style="position: relative; width: 120px; height: 140px; display: flex; align-items: center; justify-content: center;">
+          <svg viewBox="0 0 100 120" style="width: 100%; height: 100%; fill: none; stroke: var(--moon-gold); stroke-width: 4; stroke-linejoin: round;">
+            <path d="M50 5 L10 25 L10 60 C10 85 30 105 50 115 C70 105 90 85 90 60 L90 25 Z" fill="rgba(230,190,138,0.1)" />
+            <path d="M35 60 L45 70 L65 45" stroke="var(--moon-ice)" stroke-width="6" stroke-linecap="round" />
+          </svg>
+        </div>
+
+        <div class="sec-box" style="text-align: left; width: 200px;">
+          <h4 style="color: var(--moon-ice); margin-bottom: 8px;">Applet Environment</h4>
+          <p style="font-size: 0.8rem; color: var(--text-dim);">Applets are pure HTML/JS running in the browser. You control what services run on your server.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq" style="padding-top: 80px;">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;">
+        <p class="section-label">Questions</p>
+        <h2 class="section-title">You're thinking it. <span class="shimmer-text">Let's answer it.</span></h2>
+      </div>
+      <div class="faq-list reveal" style="max-width:800px; margin:40px auto 0;">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Does it really work with Obsidian, Logseq AND Zim?</button>
+          <div class="faq-a"><p>Yes. Moonstone uses dynamic Profiles to auto-detect the vault format. It normalizes tags, double-bracket links, and metadata on the fly. You can switch from Logseq to Obsidian, and your API scripts will keep working without any changes.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What is the "Moonstone" format?</button>
+          <div class="faq-a"><p>While we support third-party formats, Moonstone also has its own native Plain Text format. It's designed to be the cleanest, most Git-friendly markdown implementation, with explicit frontmatter and strict hierarchical linking. Perfect for purists.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Are images and attachments supported?</button>
+          <div class="faq-a"><p>Absolutely. The <code>/api/attachment</code> endpoint serves media files directly. Applets and Services can upload images, voice memos, and PDFs via standard POST requests, and Moonstone places them in the correct asset folder based on your vault profile.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How does the Reactive Filesystem (SSE) work?</button>
+          <div class="faq-a"><p>Moonstone binds to your OS's native file watcher (inotify on Linux, FSEvents on macOS, ReadDirectoryChanges on Windows) via Python's <code>watchdog</code>. When a file is saved, it pushes a Server-Sent Event (SSE) to connected clients in milliseconds. Zero polling. Zero CPU overhead.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Can I use it WITH my Obsidian app running?</button>
+          <div class="faq-a"><p>Yes. Point Moonstone at your existing vault folder. Keep using Obsidian for local editing. Use Moonstone for the API, Applets, Web Editor, and background automations simultaneously. They sync perfectly.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Who is behind Moonstone?</button>
+          <div class="faq-a">
+            <p>Just one indie hacker building products in public. No corporation, no VC funding. I share the entire development process, architectural decisions, further ideas, and growth metrics in the Maker Log. <br><br><a href="https://t.me/asakura201" target="_blank" style="color:var(--moon-gold); font-weight:bold;">Follow the Maker Journey on Telegram (RU) →</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK START -->
+  <section class="start" id="start" style="padding: 100px 0;">
+    <div class="container">
+      <div class="section-header reveal" style="text-align: center;">
+        <p class="section-label">Quick Start</p>
+        <h2 class="section-title">Install. Browse. <span class="shimmer-text">Extend.</span></h2>
+      </div>
+      <div class="start-steps reveal" style="justify-content: center; max-width: 800px; margin: 0 auto;">
+        <div class="start-step"><div class="start-num">1</div><div><h4>Install</h4><p><code>pip install moonstone</code></p></div></div>
+        <div class="start-step"><div class="start-num">2</div><div><h4>Launch</h4><p><code>moonstone ~/my-notes</code></p></div></div>
+        <div class="start-step"><div class="start-num">3</div><div><h4>Extend</h4><p>Open <code>localhost:8090</code></p></div></div>
+      </div>
+      <div class="start-cta reveal" style="margin-top: 40px;">
+        <a href="market.html" class="btn btn-primary btn-lg">Browse Applet Market</a>
+        <a href="https://github.com/moonstone-app/moonstone" class="btn btn-ghost btn-lg">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand"><span class="moon-mark"></span><span>Moonstone</span></div>
+      <p class="footer-copy">Open source · GPL v3 · Made by <a href="https://github.com/asakura42" style="color:var(--text-muted)">asakura</a></p>
+      <p class="footer-copy" style="margin-top:4px">
+        <a href="https://github.com/moonstone-app/moonstone" style="color:var(--text-muted);margin-right:16px">GitHub</a>
+        <a href="https://t.me/asakura201" style="color:var(--text-muted)">Telegram (RU)</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

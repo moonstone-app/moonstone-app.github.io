@@ -1,0 +1,24 @@
+[
+  {
+    "type": "applet",
+    "category": "Editor",
+    "name": "Web Editor",
+    "description": "Default Web Editor.",
+    "author": "moonstone",
+    "url": "https://github.com/moonstone-app/applet-web-editor",
+    "tags": "editor",
+    "icon": "✏️",
+    "stars": "0"
+  },
+  {
+    "type": "service",
+    "category": "Telegram",
+    "name": "Telegram Notes",
+    "description": "Telegram bot that saves messages, photos and voice notes to your wiki pages.",
+    "author": "moonstone",
+    "url": "https://github.com/moonstone-app/service-telegram-notes",
+    "tags": "telegram,bot,mobile",
+    "icon": "🤖",
+    "stars": "0"
+  }
+]

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moonstone Market — Applets & Services for your knowledge base</title>
+  <meta name="description" content="Browse, discover and install community applets and services for Moonstone. Kanban boards, AI search, Telegram bots and more.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav scrolled" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="moon-mark"></span>
+        <span>Moonstone</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#compare">Why Moonstone</a></li>
+        <li><a href="index.html#build">For Developers</a></li>
+        <li><a href="market.html" class="nav-active">Market</a></li>
+        <li><a href="index.html#start">Get Started</a></li>
+      </ul>
+      <a href="https://github.com/moonstone-app/moonstone" class="nav-cta btn btn-nav">Get Moonstone</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MARKET HERO -->
+  <section class="mkt-hero">
+    <div class="container">
+      <p class="section-label">The Infinite App Store</p>
+      <h1 class="section-title mkt-title">Extend your brain with <span class="shimmer-text">Micro-Apps.</span></h1>
+      <p class="section-sub mkt-sub">Install community tools in one click. Or describe what you need to an AI and publish your own in seconds.</p>
+
+      <!-- TYPE TABS: Applets / Services -->
+      <div class="mkt-type-tabs" id="mkt-type-tabs">
+        <button class="mkt-type-tab active" data-type="applet"><span class="mkt-type-icon">📊</span> Applets</button>
+        <button class="mkt-type-tab" data-type="service"><span class="mkt-type-icon">⚡</span> Services</button>
+      </div>
+
+      <!-- SEARCH -->
+      <div class="mkt-search-wrap">
+        <svg class="mkt-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="mkt-search" class="mkt-search" placeholder="Search applets..." autocomplete="off">
+      </div>
+
+      <!-- CALL TO ACTION -->
+      <div style="text-align: center; margin-bottom: 28px;">
+        <a href="https://github.com/orgs/moonstone-app/discussions/categories/applets-services" class="btn btn-ghost btn-nav" style="font-size: 0.8rem; padding: 6px 14px;">+ Publish your own</a>
+      </div>
+
+      <!-- CATEGORY FILTERS -->
+      <div class="mkt-filters" id="mkt-filters">
+        <button class="mkt-filter active" data-cat="all">All</button>
+      </div>
+
+      <!-- SORT -->
+      <div class="mkt-sort-wrap">
+        <label class="mkt-sort-label">Sort by</label>
+        <select id="mkt-sort" class="mkt-sort">
+          <option value="stars">⭐ Most popular</option>
+          <option value="name">A → Z</option>
+          <option value="name-desc">Z → A</option>
+        </select>
+        <span class="mkt-count" id="mkt-count"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLET GRID -->
+  <section class="mkt-grid-section">
+    <div class="container">
+      <div class="mkt-callout">
+        <p><strong>Think in surfaces:</strong> <span class="shimmer-text">Applets</span> are UIs. <span class="shimmer-text">Services</span> are automations. Install from Git, keep everything local, and build a toolbox around one notebook.</p>
+      </div>
+      <div class="mkt-grid" id="mkt-grid"></div>
+      <div class="mkt-empty" id="mkt-empty" style="display:none;">
+        <span class="mkt-empty-icon">🔍</span>
+        <h3>No applets found</h3>
+        <p>Try a different search or category.</p>
+      </div>
+      <div class="mkt-pagination" id="mkt-pagination"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand"><span class="moon-mark"></span><span>Moonstone</span></div>
+      <p class="footer-copy">Open source · GPL v2+ · Built for the knowledge-obsessed.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/market.js"></script>
+</body>
+</html>
