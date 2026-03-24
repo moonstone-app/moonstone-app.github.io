@@ -98,7 +98,7 @@ code { font-family: var(--mono); font-size: .85em; background: rgba(136,200,192,
 /* --- Sections --- */
 section { padding: 120px 0; position: relative; }
 .section-label { font-size: .7rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; }
-.section-title { font-family: var(--serif); font-size: clamp(2rem,4vw,3rem); font-weight: 400; line-height: 1.15; margin-bottom: 20px; }
+.section-title { font-family: var(--serif); font-size: clamp(2rem,4vw,3rem); font-weight: 400; line-height: 1.15; margin-bottom: 20px; text-wrap: balance; }
 .section-sub { font-size: 1.05rem; color: var(--text-dim); max-width: 580px; line-height: 1.7; }
 .section-header { text-align: center; margin-bottom: 64px; }
 .section-header .section-sub { margin: 0 auto; }
@@ -111,6 +111,38 @@ section { padding: 120px 0; position: relative; }
 .btn-ghost:hover { border-color: var(--moon-silver); color: var(--text); transform: translateY(-2px); }
 .btn-nav { padding: 8px 20px; font-size: .8rem; }
 .btn-lg { padding: 16px 36px; font-size: 1rem; }
+
+/* Focus visible for accessibility */
+.btn:focus-visible,
+.nav-links a:focus-visible,
+.mkt-search:focus-visible,
+.mkt-sort:focus-visible,
+.mkt-filter:focus-visible,
+.mkt-type-tab:focus-visible,
+.mkt-page-btn:focus-visible,
+.switcher-tab:focus-visible,
+.faq-q:focus-visible,
+.showcase-tab:focus-visible { outline: 2px solid var(--moon-ice); outline-offset: 2px; }
+
+/* Skip link for keyboard accessibility */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--moon-ice);
+  color: var(--bg);
+  padding: 12px 24px;
+  border-radius: 0 0 var(--radius) var(--radius);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  z-index: 1000;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+}
 
 /* ============================
    NAV
@@ -227,6 +259,7 @@ section { padding: 120px 0; position: relative; }
   border-radius: 100px; cursor: pointer; transition: all .3s var(--ease);
 }
 .showcase-tab:hover { border-color: var(--border-lit); color: var(--text); }
+.showcase-tab:focus-visible { outline: 2px solid var(--moon-ice); outline-offset: 2px; }
 .showcase-tab.active { background: rgba(136,200,192,.08); border-color: var(--moon-silver); color: var(--moon-ice); }
 .showcase-tab-icon { font-size: 1.1rem; }
 
@@ -449,6 +482,9 @@ section { padding: 120px 0; position: relative; }
 .start-num { width: 40px; height: 40px; border-radius: 50%; background: var(--gradient); background-size: 200% 200%; animation: shimmer 5s ease-in-out infinite; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .9rem; color: var(--bg); flex-shrink: 0; }
 .start-step h4 { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
 .start-step p { font-size: .85rem; color: var(--text-dim); line-height: 1.5; }
+.start-help { max-width: 760px; margin: -8px auto 0; text-align: center; }
+.start-help p { font-size: .85rem; color: var(--text-dim); }
+.start-help a { color: var(--moon-ice); font-weight: 600; }
 .start-cta { text-align: center; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
 
 /* ============================
@@ -584,6 +620,8 @@ section { padding: 120px 0; position: relative; }
 }
 .mkt-card:hover { border-color: rgba(136,200,192,.12); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,.25); }
 .mkt-card:hover::before { opacity: 1; }
+.mkt-card-loading { pointer-events: none; }
+.mkt-card-loading:hover { transform: none; box-shadow: none; }
 
 .mkt-card-head { display: flex; align-items: center; gap: 12px; }
 .mkt-card-icon { font-size: 1.8rem; flex-shrink: 0; }
@@ -618,6 +656,24 @@ section { padding: 120px 0; position: relative; }
 .mkt-empty-icon { font-size: 3rem; margin-bottom: 16px; }
 .mkt-empty h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text); }
 .mkt-empty p { font-size: .9rem; }
+
+.mkt-skeleton {
+  display: block;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(136,200,192,.06), rgba(136,200,192,.14), rgba(136,200,192,.06));
+  background-size: 200% 100%;
+  animation: mkt-shimmer 1.4s ease-in-out infinite;
+}
+.mkt-skeleton-title { width: 160px; height: 14px; margin-bottom: 8px; }
+.mkt-skeleton-meta { width: 90px; height: 10px; }
+.mkt-skeleton-line { width: 100%; height: 12px; }
+.mkt-skeleton-line.short { width: 72%; }
+.mkt-skeleton-tag { width: 64px; height: 22px; }
+
+@keyframes mkt-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 
 /* Pagination */
 .mkt-pagination { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 40px; }
@@ -687,7 +743,6 @@ section { padding: 120px 0; position: relative; }
   overflow: hidden;
   border: 1px solid rgba(136,200,192,.08);
   border-radius: var(--radius-sm);
-  overflow: hidden;
 }
 .code-head {
   display: flex;
@@ -822,24 +877,34 @@ section { padding: 120px 0; position: relative; }
 }
 
 @media (max-width: 640px) {
-  section { padding: 80px 0; overflow: hidden; }
-  .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(8,12,20,.97); backdrop-filter: blur(20px); flex-direction: column; padding: 24px; gap: 20px; border-bottom: 1px solid var(--border); }
+  section { padding: 60px 0; overflow: hidden; }
+  .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(8,12,20,.97); backdrop-filter: blur(20px); flex-direction: column; padding: 24px; gap: 16px; border-bottom: 1px solid var(--border); }
   .nav-links.open { display: flex; }
-  .nav-toggle { display: block; }
+  .nav-links a { font-size: 1rem; padding: 12px 0; min-height: 44px; display: flex; align-items: center; }
+  .nav-toggle { display: block; min-width: 44px; min-height: 44px; }
   .nav-cta { display: none; }
-  .hero h1 { font-size: 2rem; }
-  .hero-actions { flex-direction: column; }
-  .hero-actions .btn { width: 100%; justify-content: center; }
+  .hero h1 { font-size: 1.75rem; line-height: 1.2; }
+  .hero-sub { font-size: 1rem; line-height: 1.6; }
+  .hero-actions { flex-direction: column; gap: 12px; }
+  .hero-actions .btn { width: 100%; justify-content: center; min-height: 48px; font-size: 1rem; }
+  .section-title { font-size: 1.5rem; }
+  .section-sub { font-size: 1rem; }
   .dx-grid, .security-grid, .market-features { grid-template-columns: 1fr; }
   .compare-feature { font-size: .75rem; }
-  .compare-cell { padding: 8px 8px; font-size: .7rem; }
-  .manifesto { padding: 80px 0; }
-  .mkt-grid { grid-template-columns: 1fr; }
+  .compare-cell { padding: 12px 8px; font-size: .7rem; }
+  .manifesto { padding: 60px 0; }
+  .mkt-grid { grid-template-columns: 1fr; gap: 16px; }
+  .mkt-card { padding: 20px; }
   .mkt-hero { padding: 100px 0 24px; }
   .api-switcher-tabs { flex-direction: column; }
-  .switcher-tab { border-right: none; border-bottom: 1px solid var(--border); }
+  .switcher-tab { border-right: none; border-bottom: 1px solid var(--border); min-height: 48px; }
   .workspace-visual > div:nth-child(2) { flex-direction: column; height: auto !important; }
   .workspace-visual > div:nth-child(2) > div { border-right: none !important; border-bottom: 2px solid #ddd; }
+  .faq-q { padding: 16px 20px; font-size: .9rem; min-height: 48px; }
+  .btn { min-height: 44px; padding: 12px 24px; }
+  .mkt-type-tab { min-height: 48px; padding: 12px 20px; }
+  .mkt-filter { min-height: 44px; padding: 10px 16px; }
+  .mkt-page-btn { min-height: 44px; min-width: 44px; }
 }
 
 /* ============================
@@ -1102,4 +1167,17 @@ section { padding: 120px 0; position: relative; }
   0% { transform: translateY(0); opacity: 0.5; }
   50% { transform: translateY(10px); opacity: 1; }
   100% { transform: translateY(0); opacity: 0.5; }
+}
+
+/* ============================
+   SVG ICON STYLING (DESIGN REVIEW FIX)
+   ============================ */
+.demo-bullets .icon svg {
+  width: 20px; height: 20px;
+  stroke: var(--moon-gold);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  flex-shrink: 0;
 }

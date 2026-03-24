@@ -29,21 +29,27 @@
 
   if (!grid) return;
 
+  if (filtersEl) {
+    filtersEl.addEventListener('click', handleCatClick);
+  }
+
   // ---- Load Data ----
   async function loadData() {
+    renderLoading();
+
     try {
       const resp = await fetch(DATA_URL);
       if (!resp.ok) throw new Error('Failed to load data');
       const data = await resp.json();
-      
+
       allItems = data.map(obj => {
-        obj.stars = parseInt(obj.stars) || 0;
+        obj.stars = parseInt(obj.stars, 10) || 0;
         obj.type = obj.type || 'applet';
         obj._tags = (obj.tags || '').split(',').map(t => t.trim()).filter(Boolean);
         obj._search = [obj.name, obj.description, obj.author, obj.tags, obj.category].join(' ').toLowerCase();
         return obj;
       });
-      
+
       buildCategoryFilters();
       applyFilters();
     } catch (e) {
@@ -52,12 +58,36 @@
     }
   }
 
+  function renderLoading() {
+    empty.style.display = 'none';
+    grid.style.display = '';
+    grid.innerHTML = Array.from({ length: 6 }, () => `
+      <article class="mkt-card mkt-card-loading" aria-hidden="true">
+        <div class="mkt-card-head">
+          <span class="mkt-card-icon">○</span>
+          <div class="mkt-card-meta">
+            <div class="mkt-skeleton mkt-skeleton-title"></div>
+            <div class="mkt-skeleton mkt-skeleton-meta"></div>
+          </div>
+        </div>
+        <div class="mkt-skeleton mkt-skeleton-line"></div>
+        <div class="mkt-skeleton mkt-skeleton-line short"></div>
+        <div class="mkt-card-tags">
+          <span class="mkt-skeleton mkt-skeleton-tag"></span>
+          <span class="mkt-skeleton mkt-skeleton-tag"></span>
+        </div>
+      </article>
+    `).join('');
+  }
+
   // ---- Type tabs ----
   if (typeTabsEl) {
     typeTabsEl.addEventListener('click', e => {
       const btn = e.target.closest('.mkt-type-tab');
       if (!btn) return;
-      typeTabsEl.querySelectorAll('.mkt-type-tab').forEach(b => b.classList.remove('active'));
+      typeTabsEl.querySelectorAll('.mkt-type-tab').forEach(b => {
+        b.classList.remove('active');
+      });
       btn.classList.add('active');
       currentType = btn.dataset.type;
       currentCat = 'all';
@@ -93,14 +123,14 @@
       btn.textContent = cat;
       filtersEl.appendChild(btn);
     });
-
-    filtersEl.addEventListener('click', handleCatClick);
   }
 
   function handleCatClick(e) {
     const btn = e.target.closest('.mkt-filter');
     if (!btn) return;
-    filtersEl.querySelectorAll('.mkt-filter').forEach(b => b.classList.remove('active'));
+    filtersEl.querySelectorAll('.mkt-filter').forEach(b => {
+      b.classList.remove('active');
+    });
     btn.classList.add('active');
     currentCat = btn.dataset.cat;
     currentPage = 1;
